@@ -53,8 +53,8 @@ public class MainPageTest {
     @DisplayName("Вход в личный кабинет")
     public void logIm(){
         open("https://eastbrew.com/login/");
-        $(By.name("login")).sendKeys("slava.engels.2000@gmail.com");
-        $(By.name("password")).sendKeys("Uzd6N%BPuXE");
+        $(By.name("login")).sendKeys("test@mail.com");
+        $(By.name("password")).sendKeys("Uzd6N%BPuxE");
         $(By.cssSelector("input[type=\"submit\"]")).click();
         String loginURL = "https://eastbrew.com/my/orders/";
         webdriver().shouldHave(url(loginURL), Duration.ofSeconds(15));
