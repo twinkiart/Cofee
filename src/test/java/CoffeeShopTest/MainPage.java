@@ -1,4 +1,4 @@
-package com.example.cofee;
+package CoffeeShopTest;
 
 import com.codeborne.selenide.SelenideElement;
 

@@ -1,19 +1,15 @@
-package com.example.cofee;
+package CoffeeShopTest;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import org.openqa.selenium.By;
-import org.openqa.selenium.PageLoadStrategy;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 
 import java.time.Duration;
-
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.WebDriverConditions.url;
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,6 +73,45 @@ public class MainPageTest {
         $("#seconds").shouldHave(text("59"));
         Selenide.sleep(30000);
         $("#seconds").shouldHave(text("29"));
+    }
+    @Test
+    @DisplayName("Проверка активности окна выбора города")
+    public void windowVisable(){
+        $(By.cssSelector("div[class=\"Nav__Item--Inline\"]")).click();
+        $(By.cssSelector("div[class=\"fancybox-skin\"]")).shouldBe(visible);
+    }
+    @Test
+    @DisplayName("Перенос товара в карзину + иконка кол-во товаров в корзине")
+    public void buyStuff(){
+        $(By.cssSelector("i[class=\"Nav__Icon--Catalog icon-menu\"]")).click();
+        $(By.cssSelector("img[alt=\"Иконка Кофе\"]")).shouldBe(interactable).click();
+        String shopURL = "https://eastbrew.com/category/coffee/";
+        assertEquals(shopURL, WebDriverRunner.url(),"Переход не произашел");
+        $(By.cssSelector("a[title=\"Кофе Бразилия Фелпс\"]")).scrollIntoView("{block: 'center'}").shouldBe(visible);
+        $(By.cssSelector("form[data-product-id=\"1844\"]")).click();
+        $(By.cssSelector("div[class=\"add2cart \"]")).shouldBe(visible);
+        $(By.cssSelector("span[class=\"Product__Text--Primary\"]")).click();
+        $(By.cssSelector("div[id=\"popupProductAdded\"]")).shouldBe(visible);
+        $(By.cssSelector("a[class=\"Product__Added--Continue\"]")).click();
+        $(By.cssSelector("a[title=\"Корзина\"]")).shouldBe(visible);
+        $(By.cssSelector("span[class=\"Header__Text--ItemsInCart js-cart-items\"]")).shouldBe(visible);
+    }
+    @Test
+    @DisplayName("Активность кнопки поддержки")
+    public void hellpButton(){
+        $(By.cssSelector("div[id=\"connect-widget\"]")).shouldBe(interactable).click();
+        $(By.cssSelector("div[class=\"wca-modal\"]")).shouldBe(visible).shouldBe(interactable);
+        $(By.cssSelector("a[class=\"wca-link wca-tgm\"]")).shouldBe(visible).click();
+        String telegrammURL = "https://t.me/eastbrew";
+        webdriver().shouldHave(url(telegrammURL), Duration.ofSeconds(15));
+        assertEquals(telegrammURL,WebDriverRunner.url(),"переход на страницу тм не произашел");
+    }
+    @Test
+    @DisplayName("Смена языка на стр.")
+    public void language(){
+        $(By.cssSelector("img[alt=\"usa\"]")).click();
+        String languageURL = "https://eastbrew.com/en/";
+        assertEquals(languageURL,WebDriverRunner.url(),"Язык на странице не изменился");
     }
 
 }
