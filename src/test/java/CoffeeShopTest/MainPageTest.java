@@ -113,5 +113,12 @@ public class MainPageTest {
         String languageURL = "https://eastbrew.com/en/";
         assertEquals(languageURL,WebDriverRunner.url(),"Язык на странице не изменился");
     }
+    @Test
+    @DisplayName("Переход на страницу журнала")
+    public void journey(){
+        $$x("//a[contains(text(),'Журнал о кофе')]").first().click();
+        String journeyURL ="https://eastbrew.com/journal/";
+        assertEquals(journeyURL,WebDriverRunner.url(),"Журнал не открылся");
+    }
 
 }
