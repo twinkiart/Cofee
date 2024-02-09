@@ -17,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class MainPageTest {
+
+    //Оптимизировать тесты перенеся все деййствия в POM
     MainPage mainPage = new MainPage();
 
     @BeforeAll
